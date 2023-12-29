@@ -1,0 +1,4 @@
+File,RT,Name,Formula,Score,Labels,corrected_area,corrected_conc
+02Oct2023_Inj12_LowpH_pos,7,Compound A,C50 H103 O13,75,lowpH,20000.0,0.0479
+02Oct2023_Inj12_LowpH_pos,14,Compound B,C12 H24,88,lowpH,100000.0,0.2394
+02Oct2023_Inj12_LowpH_pos,22,Compound C,C10 H40 O7,90,lowpH,200000.0,0.4787

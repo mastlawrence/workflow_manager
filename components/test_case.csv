@@ -1,0 +1,6 @@
+test_data_1,test_data_2,test_data_3
+1,red,TRUE
+2,blue,TRUE
+3,green,TRUE
+4,yellow,FALSE
+5,purple,FALSE
