@@ -19,9 +19,12 @@ class State(rx.State):
     # TODO: GO through this class and understand it
 
     img: list[str]
+    number: float
+    NB: str
 
     # why this decorator?
     @rx.var
+    # I think we can get this simpler with rx.upload()
     def file_str(self) -> str:
         """Get the string representation of the uploaded files"""
         return "\n".join(os.listdir(rx.get_asset_path()))
@@ -43,9 +46,6 @@ class State(rx.State):
 
         filepath = '.web/public/processed_data.csv'
         finished_data.to_csv(filepath, index=False)
-
-    def form_state(self):
-        pass
 
 
 def index():
@@ -119,17 +119,23 @@ def lch_submission():
                         border='1px dotted',
                         padding='5em',
                     )),
-                # TODO: Figure out what is wrong with the download link
-                rx.button("Submit", on_click=lambda: State.handle_upload(rx.upload_files())),
-                rx.button("process data", on_click=lambda: State.process_ext('.web/public/test_data.csv')),
-                rx.button("download data", on_click=rx.download(url='/processed_data.csv')),
+                rx.hstack(
+                    rx.text("Actual AET Concentration (µg/mL):"),
+                    rx.number_input(on_change=State.set_number),
+                ),
+                rx.hstack(
+                    rx.text("Notebook Reference:", width='300px'),
+                    rx.input(on_change=State.set_NB)
+                ),
+                rx.button_group(
+                    rx.button("Submit", on_click=lambda: State.handle_upload(rx.upload_files())),
+                    rx.button("process data", on_click=lambda: State.process_ext('.web/public/test_data.csv', State.number)),
+                    rx.button("download data", on_click=rx.download(url='/processed_data.csv')),
+                    variant='outline',
+                )
             )
         )
     )
-
-
-def form_page():
-    pass
 
 
 app = rx.App()
