@@ -27,6 +27,7 @@ class State(rx.State):
     # I think we can get this simpler with rx.upload()
     def file_str(self) -> str:
         """Get the string representation of the uploaded files"""
+        # TODO: Figure out this line of code in particular
         return "\n".join(os.listdir(rx.get_asset_path()))
 
     async def handle_upload(self, files: List[rx.UploadFile]):
@@ -44,8 +45,12 @@ class State(rx.State):
         finished_data = pd.read_csv(filename, skiprows=2)
         finished_data = process_extractables(finished_data, AET_conc)
 
-        filepath = '.web/public/processed_data.csv'
-        finished_data.to_csv(filepath, index=False)
+        # TODO: Figure out the smart way to do this
+        finished_data[0].to_csv(".web/public/finished_lowpH.csv", index=False)
+        finished_data[1].to_csv(".web/public/finished_highpH.csv", index=False)
+        finished_data[2].to_csv(".web/public/finished_IPA.csv", index=False)
+        finished_data[3].to_csv(".web/public/finished_50IPA.csv", index=False)
+        finished_data[4].to_csv(".web/public/finished_hexane.csv", index=False)
 
 
 def index():
@@ -64,7 +69,8 @@ def ext_page():
     """
     return rx.container(
         rx.image(src='/thesis_logo.PNG'),
-        extractables_menu()
+        extractables_menu(),
+
     )
 
 
@@ -108,6 +114,7 @@ def lch_submission():
     """
     page where analyst is to submit processed leachables data
     """
+    # TODO: Add markers to passing or failing system suitability on-screen
     return rx.vstack(
         rx.image(src='/thesis_logo.PNG'),
         rx.clear_selected_files,
@@ -129,16 +136,19 @@ def lch_submission():
                 ),
                 rx.button_group(
                     rx.button("Submit", on_click=lambda: State.handle_upload(rx.upload_files())),
-                    rx.button("process data", on_click=lambda: State.process_ext('.web/public/test_data.csv', State.number)),
+                    rx.button("process data",
+                              on_click=lambda: State.process_ext('.web/public/test_data.csv', State.number)),
                     rx.button("download data", on_click=rx.download(url='/processed_data.csv')),
                     variant='outline',
-                )
+                ),
             )
         )
     )
 
 
 app = rx.App()
+
+print(os.listdir(rx.get_asset_path()))
 
 app.add_page(index, route='/')
 app.add_page(ext_page, route='/extractables')

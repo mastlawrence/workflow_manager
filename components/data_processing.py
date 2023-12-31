@@ -51,13 +51,7 @@ def process_extractables(pandas_df, AET_conc):
     ipa50_df = subtract_condition(ipa50_df)
     hexane_df = subtract_condition(hexane_df)
 
-    print("low pH:", lowph_df, '\n')
-    print("high pH:", highph_df, '\n')
-    print("IPA:", ipa_df, '\n')
-    print("50% IPA:", ipa50_df, '\n')
-    print("Hexane:", hexane_df, '\n')
-
-    return lowph_df
+    return [lowph_df, highph_df, ipa_df, ipa50_df, hexane_df]
 
 
 def import_data(filename):
