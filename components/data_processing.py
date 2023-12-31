@@ -7,8 +7,11 @@ import pandas as pd
 import numpy as np
 import sys
 
+# Global settings
+pd.options.mode.chained_assignment = None
 
-def process_extractables(pandas_df):
+
+def process_extractables(pandas_df, AET_conc):
     """Business Logic"""
     # Step 1: import MassHunter data
     system_subset = pandas_df
@@ -26,7 +29,7 @@ def process_extractables(pandas_df):
     calculate_suitability(system_subset)
 
     # step 6: Perform semi-quantitation of the data
-    system_subset = quantitate_data(system_subset)
+    system_subset = quantitate_data(system_subset, AET_conc)
 
     # step 7: Establish AET levels for the analysis
     AET_conc = establish_AET(system_subset)
@@ -83,14 +86,14 @@ def format_dataframe(dataframe):
     :return: object of type dataframe
     """
     # Type-cast columns to strings
-    dataframe['File'] = dataframe['File'].astype(str)
-    dataframe['Name'] = dataframe['Name'].astype(str)
-    dataframe['Formula'] = dataframe['Formula'].astype(str)
+    dataframe['File'].astype(str)
+    dataframe['Name'].astype(str)
+    dataframe['Formula'].astype(str)
 
     # Type-cast columns to integers
-    dataframe['RT'] = dataframe['RT'].astype(int)
-    dataframe['Area'] = dataframe['Area'].astype(int)
-    dataframe['Score'] = dataframe['Score'].astype(int)
+    dataframe['RT'].astype(int)
+    dataframe['Area'].astype(int)
+    dataframe['Score'].astype(int)
 
     return dataframe
 
@@ -177,7 +180,7 @@ def calculate_suitability(dataframe):
     return None
 
 
-def quantitate_data(df):
+def quantitate_data(df, AET_conc):
     """
     Uses concentration of Irganox 1010 standard to perform
     semi-quantitation of extractables data
@@ -186,7 +189,7 @@ def quantitate_data(df):
     """
     # Takes user input
     try:
-        irganox_conc = float(input("Input Irganox 1010 concentration: "))
+        irganox_conc = AET_conc
 
     except ValueError:
         print("Invalid concentration, value must be numeric!")

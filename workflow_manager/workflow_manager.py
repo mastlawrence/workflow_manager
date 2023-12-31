@@ -36,6 +36,17 @@ class State(rx.State):
             with open(outfile, "wb") as file_object:
                 file_object.write(upload_data)
 
+    def process_ext(self, filename, AET_conc):
+        """process extractables data"""
+        finished_data = pd.read_csv(filename, skiprows=2)
+        finished_data = process_extractables(finished_data, AET_conc)
+
+        filepath = '.web/public/processed_data.csv'
+        finished_data.to_csv(filepath, index=False)
+
+    def form_state(self):
+        pass
+
 
 def index():
     """
@@ -108,55 +119,17 @@ def lch_submission():
                         border='1px dotted',
                         padding='5em',
                     )),
-                # TODO: Figure out what this line of code does
+                # TODO: Figure out what is wrong with the download link
                 rx.button("Submit", on_click=lambda: State.handle_upload(rx.upload_files())),
-                rx.button("process data"),
-                rx.text(State.file_str)
+                rx.button("process data", on_click=lambda: State.process_ext('.web/public/test_data.csv')),
+                rx.button("download data", on_click=rx.download(url='/processed_data.csv')),
             )
         )
     )
 
 
-def retrieve_data(file_in_name):
-    """
-    Pulls in .csv data after being submitted through the web app
-    :return: Object of Type None
-    """
-    # TODO: Big stuff happening here, but needs to be cleaned up.
-    # TODO: Abstract the name out so the program is only looking for .csv files
-    file_dir = os.listdir(rx.get_asset_path())
-
-    try:
-        # Step 1: finds the loaded .csv files
-        print("file successfully mounted")
-        search_index = file_dir.index(file_in_name)
-        file_location = file_dir[search_index]
-
-        # displays the asset path for debugging
-        outfile = rx.get_asset_path(file_location)
-        print(outfile)
-
-        # Step 2: read submitted file located by step 1
-        system_df = pd.read_csv(outfile, skiprows=2)
-
-        # Step 3: Process the data file
-        system_df = process_extractables(system_df)
-
-        print(system_df)
-
-        # Step 4: write file to app memory
-        # TODO: Update the formatting of this to allow for the naming of the written file
-        filepath = '.web/public/processed_data.csv'
-        system_df.to_csv(filepath, index=False)
-
-        # Print the state of the app's memory for debugging purposes
-        print(os.listdir(rx.get_asset_path()))
-
-        return None
-
-    except ValueError:
-        print("no .csv file mounted")
-        pass
+def form_page():
+    pass
 
 
 app = rx.App()
@@ -167,8 +140,5 @@ app.add_page(lch_page, route='/leachables')
 app.add_page(lit_page, route='/literature')
 app.add_page(ext_submission, route='/submission_ext')
 app.add_page(lch_submission, route='/submission_lch')
-
-# TODO: Write the back-end of this
-system_subset = retrieve_data('test_data.csv')
 
 app.compile()
