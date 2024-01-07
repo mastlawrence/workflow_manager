@@ -42,7 +42,7 @@ def main_menu():
         rx.card(
             rx.text(extractables_txt),
             header=rx.heading(rx.link("Extractables", href='/extractables'),
-                              rx.image(src='bottle1.PNG', width='60px', display='inline-block', style={'margin-left': '30px'}),
+                              rx.image(src='bottle1_transparent.PNG', width='60px', display='inline-block', style={'margin-left': '30px'}),
                               size='lg', style={'font_family': 'Tahoma', 'font_weight': '500'}),
             style={"font_family": "Tahoma"},
             width='800px',
@@ -53,7 +53,7 @@ def main_menu():
         rx.card(
             rx.text(leachables_txt),
             header=rx.heading(rx.link("Leachables", href='/leachables'),
-                              rx.image(src='/chem_illustration.PNG', width='70px', display='inline-block', style={'margin-left': '40px'}),
+                              rx.image(src='/chem_illustration_transparent.PNG', width='70px', display='inline-block', style={'margin-left': '40px'}),
                               size='lg', style={'font_family': 'Tahoma', 'font_weight': '500'}),
             style={'font_family': 'Tahoma'},
             width='800px',
@@ -64,7 +64,7 @@ def main_menu():
         rx.card(
             rx.text(literature_txt),
             header=rx.heading(rx.link("Literature", href='/literature'),
-                              rx.image(src='/book_icon.PNG', width='70px', display='inline-block', style={'margin-left': '55px'}),
+                              rx.image(src='/book_icon_transparent.PNG', width='70px', display='inline-block', style={'margin-left': '55px'}),
                               size='lg', style={'font_family': 'Tahoma', 'font_weight': '500'}),
             style={'font_family': 'Tahoma'},
             width='800px',

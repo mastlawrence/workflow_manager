@@ -1,8 +1,7 @@
 """
-Module to manage the processing of extractables
-and leachables raw .csv data from MassHunter Server
+Module to process underivatized semi-volatile extractable
+data.
 """
-# TODO: I don't think we actually need a main function here...
 import pandas as pd
 import numpy as np
 import sys
@@ -11,40 +10,38 @@ import sys
 pd.options.mode.chained_assignment = None
 
 
-def process_extractables(pandas_df, AET_conc):
-    """Business Logic"""
-    # Step 1: import MassHunter data
-    system_subset = pandas_df
+def process_extractables(system_subset, AET_conc):
+    """Process semi-volatile extractables data"""
 
-    # Step 2: Select appropriate columns
+    # Step 1: Select appropriate columns
     system_subset = select_columns(system_subset)
 
-    # Step 3: ensure each column is of the correct format
+    # Step 2: ensure each column is of the correct format
     system_subset = format_dataframe(system_subset)
 
-    # step 4: Assign labels to each injection
+    # step 3: Assign labels to each injection
     assign_labels(system_subset)
 
-    # Step 5: Calculate system suitability
+    # Step 4: Calculate system suitability
     calculate_suitability(system_subset)
 
-    # step 6: Perform semi-quantitation of the data
+    # step 5: Perform semi-quantitation of the data
     system_subset = quantitate_data(system_subset, AET_conc)
 
-    # step 7: Establish AET levels for the analysis
+    # step 6: Establish AET levels for the analysis
     AET_conc = establish_AET(system_subset)
 
-    # step 8: Check to see if compound is above AET level
+    # step 7: Check to see if compound is above AET level
     check_for_AET(system_subset, AET_conc)
 
-    # step 9: Divide system subset into separate conditions
+    # step 8: Divide system subset into separate conditions
     lowph_df = extract_condition(system_subset, "lowpH")
     highph_df = extract_condition(system_subset, "highpH")
     ipa_df = extract_condition(system_subset, "ipa")
     ipa50_df = extract_condition(system_subset, "ipa50")
     hexane_df = extract_condition(system_subset, "hexane")
 
-    # step 10: subtract peaks observed in the blank injection
+    # step 9: subtract peaks observed in the blank injection
     lowph_df = subtract_condition(lowph_df)
     highph_df = subtract_condition(highph_df)
     ipa_df = subtract_condition(ipa_df)

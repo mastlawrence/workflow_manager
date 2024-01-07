@@ -20,14 +20,13 @@ class State(rx.State):
 
     img: list[str]
     number: float
-    NB: str
 
     # why this decorator?
     @rx.var
     # I think we can get this simpler with rx.upload()
     def file_str(self) -> str:
         """Get the string representation of the uploaded files"""
-        # TODO: Figure out this line of code in particular
+        # TODO: Potentially refactor all of this
         return "\n".join(os.listdir(rx.get_asset_path()))
 
     async def handle_upload(self, files: List[rx.UploadFile]):
@@ -70,7 +69,6 @@ def ext_page():
     return rx.container(
         rx.image(src='/thesis_logo.PNG'),
         extractables_menu(),
-
     )
 
 
@@ -110,13 +108,23 @@ def ext_submission():
     )
 
 
-def lch_submission():
+def volatiles():
+    """
+    Landing page for submitting volatiles data
+    """
+    return rx.vstack(
+        navbar(),
+
+    )
+
+
+def semivolatile():
     """
     page where analyst is to submit processed leachables data
     """
     # TODO: Add markers to passing or failing system suitability on-screen
     return rx.vstack(
-        rx.image(src='/thesis_logo.PNG'),
+        navbar(),
         rx.clear_selected_files,
         rx.form(
             rx.vstack(
@@ -132,15 +140,22 @@ def lch_submission():
                 ),
                 rx.hstack(
                     rx.text("Notebook Reference:", width='300px'),
-                    rx.input(on_change=State.set_NB)
+                    rx.input()
                 ),
                 rx.button_group(
                     rx.button("Submit", on_click=lambda: State.handle_upload(rx.upload_files())),
                     rx.button("process data",
                               on_click=lambda: State.process_ext('.web/public/test_data.csv', State.number)),
-                    rx.button("download data", on_click=rx.download(url='/processed_data.csv')),
                     variant='outline',
                 ),
+                rx.button_group(
+                    rx.button("Download Low pH", on_click=rx.download(url='/finished_lowpH.csv')),
+                    rx.button("Download High pH", on_click=rx.download(url='/finished_highpH.csv')),
+                    rx.button("Download 50% IPA", on_click=rx.download(url='/finished_50IPA.csv')),
+                    rx.button("Download 100% IPA", on_click=rx.download(url='/finished_IPA.csv')),
+                    rx.button("Download 100% Hexane", on_click=rx.download(url='/finished_hexane.csv')),
+                    variant='outline'
+                )
             )
         )
     )
@@ -155,6 +170,7 @@ app.add_page(ext_page, route='/extractables')
 app.add_page(lch_page, route='/leachables')
 app.add_page(lit_page, route='/literature')
 app.add_page(ext_submission, route='/submission_ext')
-app.add_page(lch_submission, route='/submission_lch')
+app.add_page(volatiles, route='/volatiles')
+app.add_page(semivolatile, route='/submission_semi')
 
 app.compile()
