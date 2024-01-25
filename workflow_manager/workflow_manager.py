@@ -39,8 +39,14 @@ class State(rx.State):
             with open(outfile, "wb") as file_object:
                 file_object.write(upload_data)
 
-    def process_ext(self, filename, AET_conc):
-        """process extractables data"""
+    def process_volatile(self, filename, AET_conc):
+        """processes volatile data"""
+
+        pass
+
+    def process_semivol(self, filename, AET_conc):
+        """Process semi-volatile data"""
+
         finished_data = pd.read_csv(filename, skiprows=2)
         finished_data = process_extractables(finished_data, AET_conc)
 
@@ -123,6 +129,7 @@ def semivolatile():
     page where analyst is to submit processed leachables data
     """
     # TODO: Add markers to passing or failing system suitability on-screen
+    # TODO: Organize this code better by importing from another module
     return rx.vstack(
         navbar(),
         rx.clear_selected_files,
@@ -144,8 +151,8 @@ def semivolatile():
                 ),
                 rx.button_group(
                     rx.button("Submit", on_click=lambda: State.handle_upload(rx.upload_files())),
-                    rx.button("process data",
-                              on_click=lambda: State.process_ext('.web/public/test_data.csv', State.number)),
+                    rx.button("Process Data",
+                              on_click=lambda: State.process_semivol('.web/public/test_data.csv', State.number)),
                     variant='outline',
                 ),
                 rx.button_group(

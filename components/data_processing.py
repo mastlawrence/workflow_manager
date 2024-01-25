@@ -67,7 +67,13 @@ def select_columns(dataframe):
     :param dataframe: MassHunter file imported as data frame
     :return: dataframe subset
     """
-    dataframe = dataframe[['File', 'RT', 'Name', 'Area', 'Formula', 'Score']]
+    try:
+        dataframe = dataframe[['File', 'RT', 'Name', 'Area', 'Formula', 'Score']]
+
+    except TypeError:
+        print("dataset did not successfully convert to Pandas dataframe. Exiting...")
+        exit()
+
     return dataframe
 
 
@@ -180,7 +186,7 @@ def quantitate_data(df, AET_conc):
     """
     # Takes user input
     try:
-        irganox_conc = AET_conc
+        std_conc = AET_conc
 
     except ValueError:
         print("Invalid concentration, value must be numeric!")
@@ -192,7 +198,7 @@ def quantitate_data(df, AET_conc):
     avg_area = round(sum(std_area) / len(std_area), 2)
 
     # perform semi-quantitation
-    df['concentration'] = round((df['Area'] / avg_area) * irganox_conc, 4)
+    df['concentration'] = round((df['Area'] / avg_area) * std_conc, 4)
 
     return df
 

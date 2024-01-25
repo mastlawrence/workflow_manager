@@ -41,7 +41,7 @@ def extractables_menu():
 
         rx.card(
             rx.text(semivolatile_text),
-            header=rx.heading(rx.link("Submit Semi-Volatile Data", href='/submission_lch'), size='lg',
+            header=rx.heading(rx.link("Submit Semi-Volatile Data", href='/submission_semi'), size='lg',
                               style={'font-family': 'Tahoma', 'font-weight': '500'}),
 
             size='lg',
