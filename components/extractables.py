@@ -29,10 +29,10 @@ def extractables_menu():
         rx.card(
             rx.text(volatile_text),
             header=rx.heading(rx.link("Submit Volatile Data", href='/submission_lch'), size='lg',
-                              style={'font-family': 'Tahoma', 'font-weight': '500'}),
+                              style={'font-family': 'monospace', 'font-weight': '500'}),
 
             size='lg',
-            style={'font-family': 'Tahoma'},
+            style={'font-family': 'monospace'},
             width='800px',
             border='2px solid',
             _hover={'background_color': 'lightgreen',
@@ -42,10 +42,10 @@ def extractables_menu():
         rx.card(
             rx.text(semivolatile_text),
             header=rx.heading(rx.link("Submit Semi-Volatile Data", href='/submission_semi'), size='lg',
-                              style={'font-family': 'Tahoma', 'font-weight': '500'}),
+                              style={'font-family': 'monospace', 'font-weight': '500'}),
 
             size='lg',
-            style={'font-family': 'Tahoma'},
+            style={'font-family': 'monospace'},
             width='800px',
             border='2px solid',
             _hover={'background_color': 'lightblue',
@@ -55,10 +55,10 @@ def extractables_menu():
         rx.card(
             rx.text(nonvolatile_text),
             header=rx.heading(rx.link("Submit Non-Volatile Data", href='/submission_lch'), size='lg',
-                              style={'font-family': 'Tahoma', 'font-weight': '500'}),
+                              style={'font-family': 'monospace', 'font-weight': '500'}),
 
             size='lg',
-            style={'font-family': 'Tahoma'},
+            style={'font-family': 'monospace'},
             width='800px',
             border='2px solid',
             _hover={'background_color': 'LightGrey',

@@ -18,26 +18,22 @@ class State(rx.State):
     """The application state"""
     # TODO: GO through this class and understand it
 
-    img: list[str]
+    uploaded_file_path: str = ""
     number: float
 
-    # why this decorator?
-    @rx.var
-    # I think we can get this simpler with rx.upload()
-    def file_str(self) -> str:
-        """Get the string representation of the uploaded files"""
-        # TODO: Potentially refactor all of this
-        return "\n".join(os.listdir(rx.get_asset_path()))
-
     async def handle_upload(self, files: List[rx.UploadFile]):
-        """Handle the upload of a file"""
+        """Handle the upload of an excel file"""
 
-        for file in files:
-            upload_data = await file.read()
+        file = files[0]
+        data = await file.read()
+        outfile = rx.get_asset_path(file.filename)
 
-            outfile = rx.get_asset_path(file.filename)
-            with open(outfile, "wb") as file_object:
-                file_object.write(upload_data)
+        with open(outfile, 'wb') as f:
+            f.write(data)
+
+        self.uploaded_file_path = outfile
+
+
 
     def process_volatile(self, filename, AET_conc):
         """processes volatile data"""
@@ -132,7 +128,7 @@ def semivolatile():
     # TODO: Organize this code better by importing from another module
     return rx.vstack(
         navbar(),
-        rx.clear_selected_files,
+        # rx.clear_selected_files,
         rx.form(
             rx.vstack(
                 rx.upload(
@@ -151,8 +147,10 @@ def semivolatile():
                 ),
                 rx.button_group(
                     rx.button("Submit", on_click=lambda: State.handle_upload(rx.upload_files())),
+
+                    # TODO: SO damn close here, just need to get the .csv filename to be abstracted
                     rx.button("Process Data",
-                              on_click=lambda: State.process_semivol('.web/public/test_data.csv', State.number)),
+                              on_click=lambda: State.process_semivol(rx.get_asset_path("test_data.csv"), State.number)),
                     variant='outline',
                 ),
                 rx.button_group(
@@ -162,17 +160,29 @@ def semivolatile():
                     rx.button("Download 100% IPA", on_click=rx.download(url='/finished_IPA.csv')),
                     rx.button("Download 100% Hexane", on_click=rx.download(url='/finished_hexane.csv')),
                     variant='outline'
-                )
+                ),
+                rx.text(rx.get_asset_path("test_data.csv"))
             )
         )
     )
 
 
+def test_page():
+    """
+    page for testing the upload of files
+    """
+    return rx.fragment(
+        rx.text("This is a test page"),
+        rx.upload("upload excel file"),
+        rx.button("submit data", on_click=lambda: State.handle_upload(rx.upload_files())),
+        rx.text(f"uploaded file path: {State.uploaded_file_path}")
+    )
+
+
 app = rx.App()
 
-print(os.listdir(rx.get_asset_path()))
-
 app.add_page(index, route='/')
+app.add_page(test_page, route='/test')
 app.add_page(ext_page, route='/extractables')
 app.add_page(lch_page, route='/leachables')
 app.add_page(lit_page, route='/literature')
