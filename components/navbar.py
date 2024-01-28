@@ -40,37 +40,37 @@ def main_menu():
 
     return rx.vstack(
         rx.card(
-            rx.text(extractables_txt),
+            rx.text(extractables_txt, font_size="15"),
             header=rx.heading(rx.link("Extractables", href='/extractables'),
-                              rx.image(src='bottle1_transparent.PNG', width='60px', display='inline-block', style={'margin-left': '30px'}),
+                              rx.image(src='bottle1_transparent.PNG', width='80px', display='inline-block', style={'margin-left': '30px'}),
                               size='lg', style={'font_family': 'monospace', 'font_weight': '800'}),
             style={"font_family": "monospace"},
-            width='800px',
+            width='900px',
             border='2px solid',
             _hover={'background_color': 'PaleGreen',
                     'transition': '0.3s'},
         ),
         rx.card(
-            rx.text(leachables_txt),
+            rx.text(leachables_txt, font_size="15"),
             header=rx.heading(rx.link("Leachables", href='/leachables'),
-                              rx.image(src='/chem_illustration_transparent.PNG', width='70px', display='inline-block', style={'margin-left': '40px'}),
+                              rx.image(src='/chem_illustration_transparent.PNG', width='90px', display='inline-block', style={'margin-left': '40px'}),
                               size='lg', style={'font_family': 'monospace', 'font_weight': '800'}),
             style={'font_family': 'monospace'},
-            width='800px',
+            width='900px',
             border='2px solid',
             _hover={'background_color': 'LightBlue',
                     'transition': '0.3s'}
         ),
         rx.card(
-            rx.text(literature_txt),
+            rx.text(literature_txt, font_size="15"),
             header=rx.heading(rx.link("Literature", href='/literature'),
-                              rx.image(src='/book_icon_transparent.PNG', width='70px', display='inline-block', style={'margin-left': '55px'}),
+                              rx.image(src='/book_icon_transparent.PNG', width='90px', display='inline-block', style={'margin-left': '55px'}),
                               size='lg', style={'font_family': 'monospace', 'font_weight': '800'}),
             style={'font_family': 'monospace'},
-            width='800px',
+            width='900px',
             border='2px solid',
             _hover={'background_color': 'LightGrey',
                     'transition': '0.3s'}
         ),
-        justify_content='space_between'
+        # justify_content='space_between'
     )

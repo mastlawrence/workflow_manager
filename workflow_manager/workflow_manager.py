@@ -23,6 +23,7 @@ class State(rx.State):
 
     async def handle_upload(self, files: List[rx.UploadFile]):
         """Handle the upload of an excel file"""
+        # TODO: Go through this and understand this upload system more
 
         file = files[0]
         data = await file.read()
@@ -161,11 +162,12 @@ def semivolatile():
                     rx.button("Download 100% Hexane", on_click=rx.download(url='/finished_hexane.csv')),
                     variant='outline'
                 ),
-                rx.text(rx.get_asset_path("test_data.csv"))
+                rx.text(rx.get_asset_path("test_data.csv")),
             )
         )
     )
 
+print(State.uploaded_file_path)
 
 def test_page():
     """
