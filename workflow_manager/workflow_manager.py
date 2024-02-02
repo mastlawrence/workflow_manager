@@ -162,7 +162,7 @@ def semivolatile():
                     rx.button("Download 100% Hexane", on_click=rx.download(url='/finished_hexane.csv')),
                     variant='outline'
                 ),
-                rx.text(rx.get_asset_path("test_data.csv")),
+                # rx.text(rx.get_asset_path("test_data.csv")),
             )
         )
     )

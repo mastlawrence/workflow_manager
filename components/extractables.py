@@ -28,7 +28,7 @@ def extractables_menu():
     return rx.vstack(
         rx.card(
             rx.text(volatile_text),
-            header=rx.heading(rx.link("Submit Volatile Data", href='/submission_lch'), size='lg',
+            header=rx.heading(rx.link("Submit Volatile Extractables Data", href='/submission_lch'), size='lg',
                               style={'font-family': 'monospace', 'font-weight': '500'}),
 
             size='lg',
@@ -41,7 +41,7 @@ def extractables_menu():
 
         rx.card(
             rx.text(semivolatile_text),
-            header=rx.heading(rx.link("Submit Semi-Volatile Data", href='/submission_semi'), size='lg',
+            header=rx.heading(rx.link("Submit Semi-Volatile Extractables Data", href='/submission_semi'), size='lg',
                               style={'font-family': 'monospace', 'font-weight': '500'}),
 
             size='lg',
@@ -54,7 +54,7 @@ def extractables_menu():
 
         rx.card(
             rx.text(nonvolatile_text),
-            header=rx.heading(rx.link("Submit Non-Volatile Data", href='/submission_lch'), size='lg',
+            header=rx.heading(rx.link("Submit Non-Volatile Extractables Data", href='/submission_lch'), size='lg',
                               style={'font-family': 'monospace', 'font-weight': '500'}),
 
             size='lg',

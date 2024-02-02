@@ -9,12 +9,29 @@ def leachables_menu():
     defines the leachables webpage
     :return: object type NULL
     """
+
+    lch_card_1 = """
+    Submit processed volatile leachables data in .csv format with the reporting requirements
+    present within the table.
+    """
+
+    lch_card_2 = """
+    Submit processed semi-volatile leachables data in .csv format with the reporting requirements
+    present within the table.
+    """
+
+    lch_card_3 = """
+    Submit processed non-volatile leachables data in .csv format with the reporting requirements
+    present within the table.
+    """
+
     return rx.vstack(
         rx.card(
-            rx.text("card 1"),
-            header=rx.heading("Process Leachables Data", style={'font-family': 'Tahoma', 'font-weight': '500'}),
+            rx.text(lch_card_1),
+            header=rx.heading("Submit Volatile Leachables Data", size='lg',
+                              style={'font-family': 'monospace', 'font-weight': '500'}),
             size='lg',
-            style={'font-family': 'Tahoma'},
+            style={'font-family': 'monospace'},
             width='800px',
             border='2px solid',
             _hover={'background_color': 'PaleGreen',
@@ -22,10 +39,11 @@ def leachables_menu():
         ),
 
         rx.card(
-            rx.text("card 2"),
-            header=rx.heading("This is card 2", style={'font-family': 'Tahoma', 'font-weight': '500'}),
+            rx.text(lch_card_2),
+            header=rx.heading("Submit Semi-Volatile Leachables Data", size='lg',
+                              style={'font-family': 'monospace', 'font-weight': '500'}),
             size='lg',
-            style={'font-family': 'Tahoma'},
+            style={'font-family': 'monospace'},
             width='800px',
             border='2px solid',
             _hover={'background_color': 'LightBlue',
@@ -33,10 +51,11 @@ def leachables_menu():
         ),
 
         rx.card(
-            rx.text("card 3"),
-            header=rx.heading("this is card 3", style={'font-family': 'Tahoma', 'font-weight': '500'}),
+            rx.text(lch_card_3),
+            header=rx.heading("Submit Non-Volatile Leachables Data", size='lg',
+                              style={'font-family': 'monospace', 'font-weight': '500'}),
             size='lg',
-            style={'font-family': 'Tahoma'},
+            style={'font-family': 'monospace'},
             width='800px',
             border='2px solid',
             _hover={'background-color': 'LightGrey',

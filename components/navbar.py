@@ -32,10 +32,12 @@ def main_menu():
     acceptance criteria.
     """
 
-    literature_txt = """
+    stability_text = """
     Review extractables and leachables literature from outside studies. 
-    Search for references to compounds identified in extractables studies.
-    Read about previous work performed on similar primary packaging systems.
+    Merge extractables and leachables studies across multiple timepoints 
+    into a single report. Search for references to compounds identified 
+    in extractables studies. Read about previous work performed on similar
+     primary packaging systems.
     """
 
     return rx.vstack(
@@ -62,8 +64,8 @@ def main_menu():
                     'transition': '0.3s'}
         ),
         rx.card(
-            rx.text(literature_txt, font_size="15"),
-            header=rx.heading(rx.link("Literature", href='/literature'),
+            rx.text(stability_text, font_size="15"),
+            header=rx.heading(rx.link("Stability", href='/literature'),
                               rx.image(src='/book_icon_transparent.PNG', width='90px', display='inline-block', style={'margin-left': '55px'}),
                               size='lg', style={'font_family': 'monospace', 'font_weight': '800'}),
             style={'font_family': 'monospace'},
